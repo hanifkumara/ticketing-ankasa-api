@@ -55,5 +55,3 @@ npm run dev
 
 ## Postman Collection for testing
 <br>
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/95accfab92ed0867b22e)

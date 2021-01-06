@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const router = require('./src/routes/index')
 var cors = require('cors')
 app.use(cors())
+app.use('/images', express.static('./images'))
 
 
 // routes
