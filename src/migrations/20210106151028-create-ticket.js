@@ -29,11 +29,17 @@ module.exports = {
       ticket_type: {
         type: Sequelize.STRING
       },
+      date_departure: {
+        type: Sequelize.STRING
+      },
       time_departure: {
-        type: Sequelize.DATE
+        type: Sequelize.TIME
+      },
+      date_arrived: {
+        type: Sequelize.STRING
       },
       time_arrived: {
-        type: Sequelize.DATE
+        type: Sequelize.TIME
       },
       child_person: {
         type: Sequelize.INTEGER

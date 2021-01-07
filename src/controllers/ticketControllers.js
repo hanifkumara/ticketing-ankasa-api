@@ -3,10 +3,95 @@ const helper = require('../helpers/helpers')
 const Sequelize = require('sequelize')
 const fs = require('fs')
 const Op = Sequelize.Op
+let cek = {}
 const tickets = {
+    searchTicket: (req, res) => {
+        cek = req.query
+        console.log(req.query)
+        model.ticket.findAll({
+            where: req.query
+        })
+            .then((result) => {
+                return helper.response('success', res, result, 200, 'get all')
+            })
+            .catch((err) => {
+                helper.response('error', res, null, 401, err)
+            })
+    },
+    filter: (req, res) => {
+        const data = req.query
+        if (data.transit === undefined) {
+            var transit = {}
+        } else {
+            var transit = {transit: data.transit}
+        }
+        
+        if (data.name_maskapai === undefined) {
+            var name_maskapai = {}
+        } else {
+             var name_maskapai = { name_maskapai: data.name_maskapai }
+        }
+
+        if (data.time_departure === undefined) {
+            var departure = {}
+        } else {
+        data.time_departure = data.time_departure.split('-')
+           var departure = {
+                time_departure: {
+                    [Op.between]: [data.time_departure[0], data.time_departure[1]]
+                }
+            }
+        }
+        if (data.time_arrived === undefined){
+            var arrived = {}
+            
+        } else {
+            data.time_arrived = data.time_arrived.split('-')
+            var arrived = {
+                time_arrived: {
+                    [Op.between]: [data.time_arrived[0], data.time_arrived[1]]
+                }
+            }
+        }
+        model.ticket.findAll({
+            where: {
+                [Op.and]: [
+                    cek,
+                    transit,
+                    name_maskapai,
+                    departure,
+                    arrived
+
+                ]
+            }
+        })
+            .then((result) => {
+                return helper.response('success', res, result, 200, 'get')
+            })
+            .catch((err) => {
+                helper.response('error', res, null, 401, err)
+            })
+    },
     create: (req, res) => {
         let data = req.body
         data = JSON.parse(JSON.stringify(data))
+        
+        if (!req.file) {
+            return helper.response('error', res, null, 401, 'image is required!')
+        }
+        else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
+            const path = `./images/${req.file.filename}` //the location of the images to be deleted
+            // delete the images
+            fs.unlinkSync(path)
+            return helper.response('error', res, null, 401, 'Only .png, .jpg and .jpeg format allowed!')
+        }
+        else if (req.file.size >= 4388608) {
+            const path = `./images/${req.file.filename}` //the location of the images to be deleted
+            // delete the images
+            fs.unlinkSync(path)
+            return helper.response('error', res, null, 401, 'Image size is too large, it must be under 4MB')
+        }
+
         data.images = `${process.env.BASE_URL}/images/${req.file.filename}`
         model.ticket.create(data)
             .then((result) => {
