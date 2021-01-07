@@ -7,6 +7,7 @@ router.get('/search-ticket', ticketControllers.searchTicket)
 router.get('/filter', ticketControllers.filter)
 router.get('/detail/:id', ticketControllers.detail)
 router.get('/transaction', ticketControllers.transaction)
+router.patch('/update/:id', uploadMulter.single('images'), ticketControllers.update)
 router.post('/create', uploadMulter.single('images'), ticketControllers.create)
 
 module.exports = router
