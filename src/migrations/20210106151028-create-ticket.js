@@ -41,6 +41,12 @@ module.exports = {
       time_arrived: {
         type: Sequelize.TIME
       },
+      date_return: {
+        type: Sequelize.STRING
+      },
+      time_return: {
+        type: Sequelize.TIME
+      },
       child_person: {
         type: Sequelize.INTEGER
       },

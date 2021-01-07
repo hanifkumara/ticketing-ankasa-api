@@ -1,5 +1,6 @@
 const model = require('../models/index')
 const helper = require('../helpers/helpers')
+const { v4: uuidv4 } = require('uuid')
 const Sequelize = require('sequelize')
 const fs = require('fs')
 const Op = Sequelize.Op
@@ -25,7 +26,7 @@ const tickets = {
         } else {
             var transit = {transit: data.transit}
         }
-        
+
         if (data.name_maskapai === undefined) {
             var name_maskapai = {}
         } else {
@@ -93,6 +94,15 @@ const tickets = {
         }
 
         data.images = `${process.env.BASE_URL}/images/${req.file.filename}`
+        model.city.create({ city: data.city_departure, country: data.country_departure })
+            .catch((err) => {
+                console.log(err.parent.sqlMessage)
+            })
+        model.city.create({ city: data.city_arrived, country: data.country_arrived })
+            .catch((err) => {
+                console.log(err.parent.sqlMessage)
+            })
+
         model.ticket.create(data)
             .then((result) => {
                 return helper.response('success', res, result, 200, 'created successfully')
@@ -100,6 +110,18 @@ const tickets = {
             .catch((err) => {
                 return helper.response('error', res, null, 401, err)
             })
-    }
+    },
+     detail: (req, res) => {
+         model.ticket.findAll({
+             where: req.params
+         })
+             .then((result) => {
+                 return helper.response('success', res, result, 200, 'get by id')
+             })
+             .catch((err) => {
+                 helper.response('error', res, null, 401, err)
+             })
+     },
+     transaction: (req, res) => {}
 }
 module.exports = tickets

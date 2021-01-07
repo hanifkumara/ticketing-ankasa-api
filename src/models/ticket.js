@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     time_departure: DataTypes.TIME,
     date_arrived: DataTypes.STRING,
     time_arrived: DataTypes.TIME,
+    date_return: DataTypes.STRING,
+    time_return: DataTypes.TIME,
     child_person: DataTypes.INTEGER,
     adult_person: DataTypes.INTEGER,
     transit: DataTypes.STRING,
