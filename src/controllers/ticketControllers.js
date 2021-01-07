@@ -21,6 +21,7 @@ const tickets = {
     },
     filter: (req, res) => {
         const data = req.query
+        const sort = data.sort || 'DESC'
         if (data.transit === undefined || data.transit === '') {
             var transit = {}
         } else {
@@ -64,7 +65,10 @@ const tickets = {
                     arrived
 
                 ]
-            }
+            },
+            order: [
+                ['id', sort]
+            ]
         })
             .then((result) => {
                 return helper.response('success', res, result, 200, 'get')
