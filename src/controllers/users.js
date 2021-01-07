@@ -2,8 +2,6 @@ const { response } = require('../helpers/helpers')
 const model = require('../models/index')
 
 exports.getUsers = (req, res, next) => {
-  const {myId} = req
-  console.log('ini id login', myId)
   model.users.findAll()
   .then(result => {
     console.log(result)
@@ -16,4 +14,8 @@ exports.getUsers = (req, res, next) => {
   .catch(() => {
     return response('error', res, null, 500, { message: 'Internal Server Error!!' })
   })
+}
+exports.getMyProfile = (req, res, next) => {
+  const {myId} = req
+
 }
