@@ -9,9 +9,9 @@ exports.verifyToken = (req, res, next) => {
   jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
     if(err) {
       if (err.name === 'JsonWebTokenError') {
-        return response(res, 401, null, { message: 'Invalid Token' })
+        return response('error', res, null, 401, { message: 'Invalid Token' })
       } else if (err.name === 'TokenExpiredError') {
-        return response(res, 401, null, { message: 'Token Expired' })
+        return response('error', res, null, 401, { message: 'Token Expired' })
       }
     }
     req.myId = decoded.userId

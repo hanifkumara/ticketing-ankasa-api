@@ -17,17 +17,12 @@ exports.login = (req, res, next) => {
         bcrypt.compare(dataBody.password, user.password, function (err, resCheck) {
           if (!resCheck) return response('error', res, null, 401, { message: 'Password Wrong!!' })
           delete user.dataValues.password
-          console.log(user)
-          console.log('ini user password', user.password)
           const payload = {
             userId: user.id,
             email: user.email,
           }
           jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '5h' }, function (err, token) {
             user.dataValues.token = token
-            console.log(user)
-            console.log('ini token nya',token)
-            console.log('ini user toke', user.token)
             return response('success', res, {data: user, message: 'Login Success'}, 200, null)
           })
 
@@ -56,6 +51,7 @@ exports.register = (req, res, next) => {
         const data = {
           id,
           fullname: dataBody.fullname,
+          photo: 'https://placekitten.com/230/230',
           email: dataBody.email,
           password: hash,
           createdAt: new Date,
