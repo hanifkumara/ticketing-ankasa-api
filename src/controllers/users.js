@@ -17,7 +17,10 @@ exports.getUsers = (req, res, next) => {
 }
 exports.getMyProfile = async (req, res, next) => {
   try {
-    const { myId } = req
+    // for dev
+    const myId = 'cf3c3734-4171-4cba-860a-7b297b43095d'
+    // for dev
+    // const { myId } = req
     const resultFindOne = await model.users.findOne({ where: { id: myId } })
     delete resultFindOne.dataValues.password
     return response('success', res, resultFindOne, 200, null)
@@ -27,7 +30,7 @@ exports.getMyProfile = async (req, res, next) => {
 }
 exports.updateProfile = async (req, res, next) => {
   // for dev
-  const myId = req.body.myId
+  const myId = 'cf3c3734-4171-4cba-860a-7b297b43095d'
   // for dev
   // const { myId } = req
 
@@ -44,7 +47,7 @@ exports.updateProfile = async (req, res, next) => {
     if (req.file.size > 1000024) {
       return response('error', res, null, 401, { message: 'File too long. Maximum file 1 MB' })
     } else {
-      data.photo = `${process.env.BASE_URL}/upload/${req.file.filename}`;
+      data.photo = `${process.env.BASE_URL}/images/${req.file.filename}`;
     }
   }
   if (phone) {
