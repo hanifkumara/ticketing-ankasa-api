@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const ticketControllers = require('../controllers/ticketControllers')
+const { verifyToken } = require('../middlewares/verifyToken')
 const { uploadMulter } = require('../middlewares/upload')
 
 router.get('/search-ticket', verifyToken, ticketControllers.searchTicket)
