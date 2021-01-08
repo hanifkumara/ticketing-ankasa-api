@@ -8,5 +8,5 @@ const ticket = require('./ticket')
 router
   .use('/auth', routerAuth)
   .use('/users', routerUsers)
-  router.use('/ticket', ticket)
+  .use('/ticket', ticket)
 module.exports = router
