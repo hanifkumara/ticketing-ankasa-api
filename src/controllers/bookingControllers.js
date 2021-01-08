@@ -6,7 +6,7 @@ const fs = require('fs')
 const Op = Sequelize.Op
 const bookings = {
     create: (req, res) => {
-        console.log(req.body)
+        coba
     }
 }
 module.exports = bookings
