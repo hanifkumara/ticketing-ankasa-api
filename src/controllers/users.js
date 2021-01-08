@@ -1,26 +1,22 @@
 const { response } = require('../helpers/helpers')
 const model = require('../models/index')
 
-exports.getUsers = (req, res, next) => {
-  model.users.findAll()
-  .then(result => {
-    console.log(result)
-    result.map(value => {
+exports.getUsers = async (req, res, next) => {
+  try {
+    const reultAll = await model.users.findAll()
+    console.log(reultAll)
+    reultAll.map(value => {
       delete value.password
       console.log('ini valuenya', value.password)
     })
-    return response('success', res, result, 200, null)
-  })
-  .catch(() => {
+    return response('success', res, reultAll, 200, null)
+  } catch (error) {
     return response('error', res, null, 500, { message: 'Internal Server Error!!' })
-  })
+  }
 }
 exports.getMyProfile = async (req, res, next) => {
   try {
-    // for dev
-    const myId = 'cf3c3734-4171-4cba-860a-7b297b43095d'
-    // for dev
-    // const { myId } = req
+    const { myId } = req
     const resultFindOne = await model.users.findOne({ where: { id: myId } })
     delete resultFindOne.dataValues.password
     return response('success', res, resultFindOne, 200, null)
@@ -29,11 +25,7 @@ exports.getMyProfile = async (req, res, next) => {
   }
 }
 exports.updateProfile = async (req, res, next) => {
-  // for dev
-  const myId = 'cf3c3734-4171-4cba-860a-7b297b43095d'
-  // for dev
-  // const { myId } = req
-
+  const { myId } = req
   const { fullname, phone, gender, city, country, email } = req.body
   const data = {}
   if (fullname) {
