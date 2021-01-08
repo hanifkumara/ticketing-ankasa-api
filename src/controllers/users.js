@@ -26,18 +26,26 @@ exports.getMyProfile = async (req, res, next) => {
   }
 }
 exports.updateProfile = async (req, res, next) => {
-  const { myId } = req
+  // for dev
+  const myId = req.body.myId
+  // for dev
+  // const { myId } = req
+
   const { fullname, phone, gender, city, country, email } = req.body
   const data = {}
   if (fullname) {
     data.fullname = req.body.fullname
   }
   if (req.fileValidationError) {
-    return response('error', res, null, 401, {message: 'Only image are allowed'})
-  } else if (req.file.size > 1000024) {
-    return response('error', res, null, 401, { message: 'File too long. Maximum file 1 MB' })
-  } else {
-    data.photo = `${process.env.BASE_URL}/upload/${req.file.filename}`;
+    return response('error', res, null, 401, { message: 'Only image are allowed' })
+  }
+  if (req.file) {
+    console.log(req.fileValidationError)
+    if (req.file.size > 1000024) {
+      return response('error', res, null, 401, { message: 'File too long. Maximum file 1 MB' })
+    } else {
+      data.photo = `${process.env.BASE_URL}/upload/${req.file.filename}`;
+    }
   }
   if (phone) {
     data.phone = req.body.phone

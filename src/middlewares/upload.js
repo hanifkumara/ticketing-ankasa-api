@@ -15,6 +15,7 @@ const upload = multer({ storage: storage,
         const ext = path.extname(file.originalname).toLocaleLowerCase();
         if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
             req.fileValidationError = "Forbidden extension";
+            console.log('whats is this', req.fileValidationError)
             return callback(null, false, req.fileValidationError);
         }
         callback(null, true)

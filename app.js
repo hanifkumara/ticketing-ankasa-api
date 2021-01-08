@@ -15,7 +15,6 @@ app.use(morgan('dev'))
 
 // routes
 app.use('/api', router)
-app.use('/upload', express.static('./images'))
 
 app.listen(PORT, () => console.log(`server is running port ${PORT}
 http://localhost:${PORT}`))
