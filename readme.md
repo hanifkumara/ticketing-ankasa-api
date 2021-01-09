@@ -53,4 +53,4 @@ npm run dev
 
 ## Postman Collection for testing
 <br>
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/556c822939f1ffc48b2c)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/556c822939f1ffc48b2c#?env%5Bkode%5D=W3sia2V5IjoidG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXdzIiwidmFsdWUiOiJodHRwOi8vNTQuMTUyLjE0NS4yMzI6MzAwMC9hcGkiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImxvY2FsIiwidmFsdWUiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAvYXBpLyIsImVuYWJsZWQiOnRydWV9XQ==)
