@@ -6,47 +6,45 @@ const fs = require('fs')
 const Op = Sequelize.Op
 let cek = {}
 const tickets = {
-    searchTicket: (req, res) => {
-        cek = req.query
-        console.log(req.query)
-        model.ticket.findAll({
-            where: req.query
-        })
-            .then((result) => {
-                return helper.response('success', res, result, 200, 'get all')
-            })
-            .catch((err) => {
-                helper.response('error', res, null, 401, err)
-            })
-    },
-    filter: (req, res) => {
-        const data = req.query
+    ticketing: (req, res) => {
+        data = req.query
+        const search = {
+            city_departure: data.city_departure,
+            country_departure: data.country_departure,
+            city_arrived: data.city_arrived,
+            country_arrived: data.country_arrived,
+            ticket_type: data.ticket_type,
+            date_departure: data.date_departure,
+            child_person: data.child_person,
+            adult_person: data.adult_person,
+            class: data.class
+        }
         const sort = data.sort || 'DESC'
-        if (data.transit === undefined || data.transit === '') {
+        if (data.transit === '') {
             var transit = {}
         } else {
-            var transit = {transit: data.transit}
+            var transit = { transit: data.transit }
         }
 
-        if (data.name_maskapai === undefined || data.name_maskapai === '') {
+        if (data.name_maskapai === '') {
             var name_maskapai = {}
         } else {
-             var name_maskapai = { name_maskapai: data.name_maskapai }
+            var name_maskapai = { name_maskapai: data.name_maskapai }
         }
 
-        if (data.time_departure === undefined || data.time_departure === '') {
+        if (data.time_departure === '') {
             var departure = {}
         } else {
-        data.time_departure = data.time_departure.split('-')
-           var departure = {
+            data.time_departure = data.time_departure.split('-')
+            var departure = {
                 time_departure: {
                     [Op.between]: [data.time_departure[0], data.time_departure[1]]
                 }
             }
         }
-        if (data.time_arrived === undefined || data.time_arrived === ''){
+        if (data.time_arrived === '') {
             var arrived = {}
-            
+
         } else {
             data.time_arrived = data.time_arrived.split('-')
             var arrived = {
@@ -58,7 +56,7 @@ const tickets = {
         model.ticket.findAll({
             where: {
                 [Op.and]: [
-                    cek,
+                    search,
                     transit,
                     name_maskapai,
                     departure,
@@ -71,7 +69,10 @@ const tickets = {
             ]
         })
             .then((result) => {
-                return helper.response('success', res, result, 200, 'get')
+               if (result.length == 0) {
+                   return helper.response('success', res, result, 200, 'No results found')
+               }
+                return helper.response('success', res, result, 200, 'get all')
             })
             .catch((err) => {
                 helper.response('error', res, null, 401, err)
