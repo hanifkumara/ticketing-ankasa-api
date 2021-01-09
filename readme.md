@@ -44,6 +44,20 @@ Create a folder for the destination of the image upload directory (make sure the
 ```
 mkdir images
 ```
+### table migratiton
+```
+before doing the migration, please create a database in your local
+
+cd src
+Sequelize db:migrate
+
+```
+### fix problem Sequelize cannot run
+```
+npm install --save sequelize
+npm install --save-dev sequelize-cli
+```
+
 
 ### Compiles and hot-reloads for development
 ```
