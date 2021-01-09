@@ -11,7 +11,7 @@ const bookings = {
             include: [{
                 model: model.ticket
             }],
-            where:{user_id : req.params.id}
+            where: { user_id: req.myId }
         })
             .then((result) => {
                 return helper.response('success', res, result, 200, 'get my booking')
@@ -37,6 +37,7 @@ const bookings = {
     },
     create: (req, res) => {
         const data = req.body
+        data.user_id = req.myId
         const kode = uuidv4().split('-')[0]
         data.id = kode
         console.log(kode)
