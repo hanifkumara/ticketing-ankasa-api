@@ -39,11 +39,7 @@ PW_EMAIL =
 
 ```
 <br>
-Create a folder for the destination of the image upload directory (make sure the current folder is the Ankasa Backend folder)
 
-```
-mkdir images
-```
 ### table migratiton
 ```
 before doing the migration, please create a database in your local
