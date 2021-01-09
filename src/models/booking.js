@@ -12,13 +12,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.booking.belongsTo(models.ticket, {
         foreignKey: 'ticket_id'
-      })
+      }),
+        models.booking.belongsTo(models.users, {
+          foreignKey: 'user_id'
+        })
     }
   };
   booking.init({
     user_id: DataTypes.STRING,
     ticket_id: DataTypes.INTEGER,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    qrcode: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'booking',

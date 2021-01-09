@@ -4,9 +4,8 @@ module.exports = {
     await queryInterface.createTable('bookings', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       user_id: {
         type: Sequelize.STRING
@@ -15,6 +14,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
+        type: Sequelize.STRING
+      },
+      qrcode: {
         type: Sequelize.STRING
       },
       createdAt: {
