@@ -7,5 +7,4 @@ router
   .post('/register', register)
   .post('/forgot-password', forgotPassword)
   .patch('/reset-password', resetPassword)
-
 module.exports = router
