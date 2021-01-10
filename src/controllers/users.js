@@ -45,7 +45,7 @@ exports.updateProfile = async (req, res, next) => {
     const path = `./images/${req.file.filename}` //the location of the images to be deleted
     // delete the images
     fs.unlinkSync(path)
-    return response('error', res, null, 401, 'Image size is too large, it must be under 4MB')
+    return response('error', res, null, 401, 'Image size is too large, it must be under 2MB')
   } else {
     data.photo = `${process.env.BASE_URL}/images/${req.file.filename}`
     // process delete image on folder server
