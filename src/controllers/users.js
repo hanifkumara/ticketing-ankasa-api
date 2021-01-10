@@ -1,5 +1,6 @@
 const { response } = require('../helpers/helpers')
 const model = require('../models/index')
+const fs = require('fs')
 
 exports.getUsers = async (req, res, next) => {
   try {
@@ -36,12 +37,13 @@ exports.updateProfile = async (req, res, next) => {
     data.updatedAt = new Date()
   }
   else if (req.fileValidationError) {
+    console.log(req.fileValidationError)
     const path = `./images/${req.file.filename}` //the location of the images to be deleted
     // delete the images
     fs.unlinkSync(path)
     return response('error', res, null, 401, { message: 'Only image are allowed' })
   }
-  else if (req.file.size >= 4388608) {
+  else if (req.file.size >= 2388608) {
     const path = `./images/${req.file.filename}` //the location of the images to be deleted
     // delete the images
     fs.unlinkSync(path)
@@ -58,7 +60,6 @@ exports.updateProfile = async (req, res, next) => {
         if (images !== 'https://placekitten.com/230/230') {
           const pict = images.split('/')[4]
           const path = `./images/${pict}`
-
           fs.unlinkSync(path)
         }
       })
