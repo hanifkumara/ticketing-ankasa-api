@@ -1,12 +1,25 @@
 const multer = require('multer')
 const path = require('path')
+const model = require('../models/index')
+const fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './images')
     },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname)
+    filename: async function (req, file, cb) {
+        const {myId} = req
+        try {
+            const result = await model.users.findOne({ where: { id: myId } })
+            if (result.dataValues.photo !== 'https://placekitten.com/230/230') {
+                const filePath = result.dataValues.photo.split('/')[4]
+                console.log(filePath)
+                fs.unlinkSync(`images/${filePath}`)
+            }
+            cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname)
+        } catch (error) {
+            console.log(error)
+        }
     }
 })
 

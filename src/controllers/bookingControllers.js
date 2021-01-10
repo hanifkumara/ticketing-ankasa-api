@@ -43,6 +43,7 @@ const bookings = {
         console.log(kode)
         model.booking.create(data)
             .then((result) => {
+                console.log(result)
                 return helper.response('success', res, result, 200, 'created successfully')
             })
             .catch((err) => {
