@@ -47,7 +47,7 @@ exports.updateProfile = async (req, res, next) => {
     fs.unlinkSync(path)
     return response('error', res, null, 401, 'Image size is too large, it must be under 4MB')
   } else {
-    data.images = `${process.env.BASE_URL}/images/${req.file.filename}`
+    data.photo = `${process.env.BASE_URL}/images/${req.file.filename}`
     // process delete image on folder server
     model.users.findAll({
       attributes: ['id', 'photo'],
