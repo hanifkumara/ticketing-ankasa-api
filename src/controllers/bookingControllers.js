@@ -72,7 +72,7 @@ const bookings = {
             }, function (err) {
                 if (err) throw err
                 const data = {
-                    status: 'successfully paid',
+                    status: 'success',
                     qrcode: `${process.env.BASE_URL}/images/${req.params.id}.png`
                 }
                     model.booking.update(data, {
@@ -82,6 +82,22 @@ const bookings = {
                     })
             })
         })
+    },
+    delete: (req, res) => {
+        model.booking.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+            .then((result) => {
+                if (result === 0) {
+                    return helper.response('warning', res, null, 200, 'Id Not Found')
+                }
+                return helper.response('success', res, result, 200, 'delete successfully')
+            })
+            .catch((err) => {
+                return helper.response('error', res, null, 401, err)
+            })
     }
 }
 module.exports = bookings
