@@ -1,5 +1,6 @@
 const { response } = require('../helpers/helpers')
 const model = require('../models/index')
+const fs = require('fs')
 
 exports.getUsers = async (req, res, next) => {
   try {
@@ -31,15 +32,14 @@ exports.updateProfile = async (req, res, next) => {
   if (fullname) {
     data.fullname = req.body.fullname
   }
-  
   if (!req.file) {
     data.updatedAt = new Date()
   }
-  else if (req.fileValidationError) {
+  else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
     const path = `./images/${req.file.filename}` //the location of the images to be deleted
     // delete the images
     fs.unlinkSync(path)
-    return response('error', res, null, 401, { message: 'Only image are allowed' })
+    return response('error', res, null, 401, 'Only .png, .jpg and .jpeg format allowed!')
   }
   else if (req.file.size >= 4388608) {
     const path = `./images/${req.file.filename}` //the location of the images to be deleted

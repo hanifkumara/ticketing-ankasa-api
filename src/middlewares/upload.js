@@ -10,17 +10,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage, 
-    fileFilter: function (req, file, callback) {
-        const ext = path.extname(file.originalname).toLocaleLowerCase();
-        if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-            req.fileValidationError = "Forbidden extension";
-            console.log('whats is this', req.fileValidationError)
-            return callback(null, false, req.fileValidationError);
-        }
-        callback(null, true)
-    }
-})
+const upload = multer({ storage: storage})
 module.exports = {
     uploadMulter: upload
 }
