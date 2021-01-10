@@ -1,5 +1,6 @@
 const { response } = require('../helpers/helpers')
 const model = require('../models/index')
+const fs = require('fs')
 
 exports.getUsers = async (req, res, next) => {
   try {
@@ -31,16 +32,35 @@ exports.updateProfile = async (req, res, next) => {
   if (fullname) {
     data.fullname = req.body.fullname
   }
-  if (req.fileValidationError) {
-    return response('error', res, null, 401, { message: 'Only image are allowed' })
+  if (!req.file) {
+    data.updatedAt = new Date()
   }
-  if (req.file) {
-    console.log(req.fileValidationError)
-    if (req.file.size > 1000024) {
-      return response('error', res, null, 401, { message: 'File too long. Maximum file 1 MB' })
-    } else {
-      data.photo = `${process.env.BASE_URL}/images/${req.file.filename}`;
-    }
+  else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
+    const path = `./images/${req.file.filename}` //the location of the images to be deleted
+    // delete the images
+    fs.unlinkSync(path)
+    return response('error', res, null, 401, 'Only .png, .jpg and .jpeg format allowed!')
+  }
+  else if (req.file.size >= 2388608) {
+    const path = `./images/${req.file.filename}` //the location of the images to be deleted
+    // delete the images
+    fs.unlinkSync(path)
+    return response('error', res, null, 401, 'Image size is too large, it must be under 2MB')
+  } else {
+    data.photo = `${process.env.BASE_URL}/images/${req.file.filename}`
+    // process delete image on folder server
+    model.users.findAll({
+      attributes: ['id', 'photo'],
+      where: { id: myId }
+    })
+      .then((result) => {
+        const images = result[0].dataValues.photo
+        if (images !== 'https://placekitten.com/230/230') {
+          const pict = images.split('/')[4]
+          const path = `./images/${pict}`
+          fs.unlinkSync(path)
+        }
+      })
   }
   if (phone) {
     data.phone = req.body.phone
