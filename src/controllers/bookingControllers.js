@@ -7,10 +7,11 @@ const QRCode = require('qrcode')
 const Op = Sequelize.Op
 const bookings = {
     mybooking: (req, res) => {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 4;
-        const offset = (page - 1) * limit;
+        const limit = 4
+        const offset = (req.query.page - 1) * limit
         model.booking.findAll({
+            offset,
+            limit,
             include: [{
                 model: model.ticket
             }],
@@ -18,7 +19,17 @@ const bookings = {
             },{ offset: 0, limit: 3 }
             )
             .then((result) => {
-                return helper.response('success', res, result, 200, 'get my booking')
+                model.booking.findAll({
+                    include: [{
+                        model: model.ticket
+                    }],
+                    where: { user_id: req.myId }
+                }).then((result2) => {
+                    res.json({
+                        result: result,
+                        rows: result2.length
+                    })
+                })
             })
             .catch((err) => {
                 helper.response('error', res, null, 401, err)
