@@ -98,13 +98,13 @@ Fork the Project
     <tr>
       <td align="center">
         <a href="https://github.com/hanifkumara">
-          <img width="150" src="https://avatars1.githubusercontent.com/u/73015398?s=400&u=72939e4bacd74f0ad4de21d2c8e1a0bfe8f3b059&v=4" alt="Hanif Kumara"><br/>
+          <img width="150" src="https://avatars.githubusercontent.com/u/55839592?s=400&u=b57fbcb21416c0d12f287ddea5eb5132ad9a293c&v=4" alt="Hanif Kumara"><br/>
           <b>Hanif Kumara</b>
         </a>
       </td>
       <td align="center">
         <a href="https://github.com/FendiAnwarRifai">
-          <img width="150" src="https://avatars.githubusercontent.com/u/55839592?s=400&u=b57fbcb21416c0d12f287ddea5eb5132ad9a293c&v=4" alt="Fendi Anwar Rifa'i"><br/>
+          <img width="150" src="https://avatars0.githubusercontent.com/u/73191453?s=400&u=b47808a771d90a7fc302b683e46cf34cde16ab88&v=4" alt="Fendi Anwar Rifa'i"><br/>
           <b>Fendi Anwar Rifa'i</b>
         </a>
       </td>
