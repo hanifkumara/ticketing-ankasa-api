@@ -9,13 +9,12 @@ var cors = require('cors')
 app.use(cors())
 app.use('/images', express.static('./images'))
 
-
-// routes
-app.use('/api', router)
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
+
+// routes
+app.use('/api', router)
 
 app.listen(PORT, () => console.log(`server is running port ${PORT}
 http://localhost:${PORT}`))
